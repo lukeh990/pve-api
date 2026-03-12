@@ -2,6 +2,13 @@
 name = "pve-api"
 version = "0.1.0"
 edition = "2024"
+license = "MIT"
+authors = ["Luke Harding <luke@lukeh990.io>"]
+documentation = "https://docs.rs/pve-api"
+readme = "README.md"
+homepage = "https://github.com/lukeh990/pve-api"
+repository = "https://github.com/lukeh990/pve-api"
+description = "A rust API library for Proxmox Virtual Environment"
 
 [dependencies]
 serde = { features = ["derive"], version = "1.0.228" }
