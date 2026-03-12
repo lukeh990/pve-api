@@ -1,4 +1,6 @@
-mod builder;
+#![doc = include_str!("../README.md")]
+
+pub mod builder;
 pub mod simple;
 
 pub use builder::PveBuilder;
@@ -6,6 +8,8 @@ use reqwest::{Client, StatusCode, Url};
 pub use simple::SimpleApi;
 use thiserror::Error;
 
+/// This is the main struct for this project. It manages all the state
+/// required. Usually built with [`PveBuilder`]
 #[derive(Debug, Clone)]
 pub struct Pve {
     client: Client,
@@ -13,11 +17,20 @@ pub struct Pve {
 }
 
 impl Pve {
+    /// Create a new builder for [`Pve`]
+    ///
+    /// For Example:
+    /// ```
+    /// var pve: Pve = Pve::builder()
+    ///     .base_url("<PVE_URL>")
+    ///     .api_token("<TOKEN_ID>", "<SECRET>")
+    ///     .build()?;
+    /// ```
     pub fn builder() -> PveBuilder {
         PveBuilder::new()
     }
 
-    pub fn new(client: Client, base_url: Url) -> Self {
+    fn new(client: Client, base_url: Url) -> Self {
         Pve { client, base_url }
     }
 
@@ -35,6 +48,13 @@ impl Pve {
         }
     }
 
+    /// Run connection tests against the configured remote server.
+    ///
+    /// For Example:
+    /// ```
+    /// var pve: Pve = ...; // See Pve::builder()
+    /// var test: Result<(), PveError> = pve.test()
+    /// ```
     pub async fn test(&self) -> Result<(), PveError> {
         let path = self.base_url.join("version")?;
         let result = self.client.get(path).send().await?;
@@ -48,6 +68,10 @@ impl Pve {
     }
 }
 
+/// Used as a very broad error type encompassing serialization, request
+/// construction, parsing URLs, and response status codes. If you want to
+/// actually understand why something failed, you'd probably want to use a
+/// match statement.
 #[derive(Debug, Error)]
 pub enum PveError {
     #[error("Failed to parse URL")]

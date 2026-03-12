@@ -3,6 +3,8 @@ use reqwest::StatusCode;
 use serde_json::Value;
 use std::collections::HashMap;
 
+/// Build up a request. Usually this just allows you to add parameters before
+/// sending.
 #[derive(Debug)]
 pub struct RequestBuilder {
     path: String,
@@ -11,6 +13,7 @@ pub struct RequestBuilder {
     pve: Pve,
 }
 
+/// Describes the HTTP method in use.
 #[derive(Debug)]
 pub enum RequestMethod {
     Get,
@@ -20,6 +23,8 @@ pub enum RequestMethod {
 }
 
 impl RequestBuilder {
+    /// Creates a new [`RequestBuilder`] pulling client and base URL from
+    /// [`Pve`]. Path specifies the sub path for the endpoint.
     pub fn new(pve: &Pve, path: String, method: RequestMethod) -> Self {
         RequestBuilder {
             path,
@@ -29,6 +34,10 @@ impl RequestBuilder {
         }
     }
 
+    /// Since this will always be encoded in www-form-urlencoded it can be
+    /// represented in a [`HashMap<String, String>`] just fine. This will
+    /// init and add to a HashMap which is encoded when [`Self::send`] is
+    /// called.
     pub fn add_parameter<S: Into<String>>(mut self, name: S, value: S) -> Self {
         let map = self.parameters.get_or_insert_with(HashMap::new);
 
@@ -37,6 +46,8 @@ impl RequestBuilder {
         self
     }
 
+    /// Create and send the HTTP request. Response will come back as a
+    /// [`serde_json::Value`] type.
     pub async fn send(self) -> Result<Value, PveError> {
         let url = self.pve.base_url.join(&self.path)?;
 

@@ -1,3 +1,5 @@
+//! The builder module contains requisites to build the [`Pve`] struct.
+
 mod api_token;
 mod base_url;
 mod error;
@@ -5,9 +7,12 @@ mod user_agent;
 mod weak_tls;
 
 use crate::Pve;
-use error::BuildError;
+pub use error::BuildError;
 use reqwest::{Client, Url, header};
 
+/// Constructs a [`Pve`] struct.
+///
+/// The api_token and base_url are required or a [`BuildError`] will be made.
 #[derive(Default, Debug)]
 pub struct PveBuilder {
     user_agent: Option<String>,
@@ -17,10 +22,14 @@ pub struct PveBuilder {
 }
 
 impl PveBuilder {
+    /// Constructs [`PveBuilder`] with defaults (All defaults)
     pub fn new() -> Self {
         Default::default()
     }
 
+    /// Run this at the end of the chain to build a [`Pve`].
+    ///
+    /// Minimum required set values: [`Self::api_token`], [`Self::base_url`]
     pub fn build(self) -> Result<Pve, BuildError> {
         let user_agent_def = format!("{}/{}", env!("CARGO_PKG_NAME"), env!("CARGO_PKG_VERSION"));
         let user_agent = self.user_agent.unwrap_or(user_agent_def);
