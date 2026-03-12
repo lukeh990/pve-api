@@ -98,3 +98,7 @@ dependencies up-to-date. And work on more features. And even though it's
   - [ ] Manage firewall helper
 - [ ] `EnhancedApi` - Checking Schema - Helpers(?)
   - [ ] TBD
+
+## License
+
+This project is licensed under a MIT license. See [here](https://github.com/lukeh990/pve-api/blob/development/LICENSE).

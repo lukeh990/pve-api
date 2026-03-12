@@ -6,6 +6,9 @@
 //! - Add [`SimpleApi`] to use statement
 //! - The [`SimpleApi`] functions will be accessible from any [`crate::Pve`]
 
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2026 Luke Harding <luke@lukeh990.io>
+
 mod pve;
 mod request;
 

@@ -1,5 +1,8 @@
 //! The builder module contains requisites to build the [`Pve`] struct.
 
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2026 Luke Harding <luke@lukeh990.io>
+
 mod api_token;
 mod base_url;
 mod error;

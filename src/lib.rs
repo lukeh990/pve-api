@@ -1,5 +1,8 @@
 #![doc = include_str!("../README.md")]
 
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2026 Luke Harding <luke@lukeh990.io>
+
 pub mod builder;
 pub mod simple;
 

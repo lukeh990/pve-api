@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2026 Luke Harding <luke@lukeh990.io>
+
 use crate::{Pve, PveError};
 use reqwest::StatusCode;
 use serde_json::Value;
